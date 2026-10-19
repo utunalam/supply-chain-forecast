@@ -223,9 +223,6 @@ The project will be developed incrementally.
 
 This project is under active development. Suggestions, feedback, and ideas for improving the system are welcome.
 
-If you are learning Python, data analytics, or supply chain management, feel free to explore the code and follow the project's progress.
-
-
 ---
 
 **Repository:** https://github.com/utunalam/supply-chain-forecast
