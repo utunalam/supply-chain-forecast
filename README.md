@@ -1,6 +1,6 @@
 # Supply Chain Forecasting System
 
-A beginner-friendly Python project to help businesses manage product information, understand sales trends, forecast demand, and make better inventory replenishment decisions.
+A beginner-friendly Python project to help me manage product information, understand sales trends, forecast demand, and make better inventory replenishment decisions.
 
 **Project status:** In development  
 **Current version:** 0.1.0  
@@ -8,15 +8,15 @@ A beginner-friendly Python project to help businesses manage product information
 
 ## 1. About This Project
 
-Managing inventory can be challenging when sales and stock reports are stored in separate Excel files. Businesses need to understand which products are selling, how much stock is available, and when to replenish inventory.
+Managing inventory is challenging when sales and stock reports live in separate Excel files. I need to understand which products are selling, how much stock is available, and when to replenish inventory.
 
-This project aims to build a simple system that brings these tasks together. The long-term goal is to automate the process of collecting sales and inventory data, forecasting future demand, and recommending how much stock to replenish.
+This project aims to build a simple system that brings these tasks together. The long-term goal is to automate collecting sales and inventory data, forecasting future demand, and recommending how much stock to replenish.
 
 The project is being developed step by step, starting with a backend API for managing product information.
 
 ## 2. Project Goals
 
-The planned system aims to help users:
+The planned system aims to help:
 
 - Manage product and SKU information.
 - Import daily sales and inventory reports from Excel.
@@ -81,15 +81,7 @@ Some folders are reserved for future features and may not yet contain files.
 
 ## 6. Getting Started
 
-These instructions are for Windows users using PowerShell.
-
-### Prerequisites
-
-Install:
-
-- Python 3.10 or newer.
-- Git.
-- Visual Studio Code (recommended).
+*For Windows users using PowerShell.
 
 ### Step 1: Clone the repository
 
@@ -117,7 +109,7 @@ A virtual environment keeps this project's Python packages separate from other p
 .\.venv\Scripts\Activate.ps1
 ```
 
-If PowerShell blocks activation, you can run this command for the current terminal session:
+If PowerShell blocks activation, can run this command for the current terminal session:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
@@ -138,7 +130,7 @@ The current application uses Python's built-in `sqlite3` module for its database
 
 ### Step 5: Start the API
 
-Make sure your terminal is in the `backend` directory and run:
+Make sure terminal is in the `backend` directory and run:
 
 ```powershell
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
@@ -203,14 +195,12 @@ Select `DELETE /skus/{sku_id}` and enter the product ID.
 
 **Caution:** This permanently deletes that SKU record from the local database. Only test this operation with a record you are comfortable deleting.
 
-## 8. Understanding Some Key Terms
+## 8. Some Key Terms
 
 - **SKU (Stock Keeping Unit):** A unique identifier used to distinguish a product or product variant, such as a particular shirt size and colour.
 - **GMV (Gross Merchandise Value):** The total value of merchandise sold over a specified period, before accounting for certain deductions. The exact calculation depends on the business definition used.
 - **Demand forecasting:** Estimating future sales or demand using historical data and other relevant factors.
 - **Inventory replenishment:** Deciding when and how much stock to order or bring into inventory.
-- **API (Application Programming Interface):** A way for software systems to communicate and exchange data.
-- **CRUD:** Create, Read, Update, and Delete — the four basic operations for managing data.
 
 ## 9. Development Roadmap
 
@@ -229,27 +219,12 @@ The project will be developed incrementally.
 - [ ] Automate report processing and output generation.
 - [ ] Build a user-friendly frontend dashboard.
 
-## 10. Learning Objectives
-
-This project is also a practical learning exercise in:
-
-- Python backend development.
-- REST API design.
-- Database operations and SQL fundamentals.
-- Data validation and error handling.
-- Git and GitHub version control.
-- Data analysis and forecasting.
-- Supply chain and inventory management.
-
-## 11. Contributing and Feedback
+## 10. Contributing and Feedback
 
 This project is under active development. Suggestions, feedback, and ideas for improving the system are welcome.
 
 If you are learning Python, data analytics, or supply chain management, feel free to explore the code and follow the project's progress.
 
-## 12. License
-
-No open-source license has been selected yet. Unless a license is added, the project should not be assumed to be available for unrestricted reuse.
 
 ---
 
