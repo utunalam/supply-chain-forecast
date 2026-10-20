@@ -10,7 +10,7 @@ A beginner-friendly Python project to help me manage product information, unders
 
 Managing inventory is challenging when sales and stock reports live in separate Excel files. I need to understand which products are selling, how much stock is available, and when to replenish inventory.
 
-This project aims to build a simple system that brings these tasks together. The long-term goal is to automate collecting sales and inventory data, forecasting future demand, and recommending how much stock to replenish.
+This project aims to build a simple system that brings these tasks together. The long-term goal is to automate sales and inventory data collection, forecast future demand, and recommend how much stock to replenish.
 
 The project is being developed step by step, starting with a backend API for managing product information.
 
@@ -126,11 +126,11 @@ python -m pip install --upgrade pip
 python -m pip install fastapi "uvicorn[standard]" sqlalchemy
 ```
 
-The current application uses Python's built-in `sqlite3` module for its database connection. SQLAlchemy is installed in the initial environment but is not currently used by the application.
+The current application uses Python's built-in `sqlite3` module for its database connection.
 
 ### Step 5: Start the API
 
-Make sure terminal is in the `backend` directory and run:
+Make sure the terminal is in the `backend` directory and run:
 
 ```powershell
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
