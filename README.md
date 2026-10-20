@@ -13,12 +13,7 @@ A production-ready backend API built with Python, FastAPI, and SQLite for managi
 
 ## 💻 Local Setup Instructions
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/utunalam/supply-chain-forecast.git
-cd supply-chain-forecast
-
-**### 2. Create and activate a virtual environment**
+1. Create and activate a virtual environment
 
 Windows (PowerShell):
 powershell
@@ -26,20 +21,20 @@ powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-**### 3. Install dependencies**
+2. Install dependencies
 powershell
 
 cd backend
 python -m pip install -r requirements.txt
 
-**### 4. Run the server**
+3. Run the server
 
 From the backend directory:
 powershell
 
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
-**### 5. Test the API**
+4. Test the API
 
 Open your browser and go to:
 
