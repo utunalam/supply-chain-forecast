@@ -73,28 +73,16 @@ These instructions use Windows PowerShell. Commands for macOS and Linux are also
 
 ### Step 1: Clone the repository
 
-<<<<<<< HEAD
 ```bash
 git clone https://github.com/utunalam/supply-chain-forecast.git
 cd supply-chain-forecast
 ```
 
 ### Step 2: Create a virtual environment
-=======
-1. Create and activate a virtual environment
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 From the project root, run:
 
-<<<<<<< HEAD
 **Windows (PowerShell):**
-=======
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-2. Install dependencies
-powershell
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 ```powershell
 cd backend
@@ -141,11 +129,7 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-<<<<<<< HEAD
 ### Step 5: Run the API server
-=======
-3. Run the server
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 From the `backend` directory, run:
 
@@ -153,11 +137,7 @@ From the `backend` directory, run:
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-<<<<<<< HEAD
 Keep the terminal open while using the API.
-=======
-4. Test the API
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 The `--reload` option automatically restarts the development server when Python files change.
 
@@ -165,24 +145,11 @@ The `--reload` option automatically restarts the development server when Python 
 
 Open these URLs in your browser:
 
-<<<<<<< HEAD
 - **Interactive API documentation:** http://127.0.0.1:8000/docs
 - **Health check:** http://127.0.0.1:8000/health
 - **Root endpoint:** http://127.0.0.1:8000/
 
 FastAPI generates the interactive API documentation automatically, so you can test endpoints without building a frontend.
-=======
-**### 📡 API Endpoints**
-Method	Endpoint	Description
-GET	/health	Health check endpoint
-POST	/skus	Create a new SKU (Returns 201 Created)
-GET	/skus	List all SKUs
-GET	/skus/{sku_id}	Get a single SKU by ID
-PATCH	/skus/{sku_id}	Update specific fields of a SKU
-DELETE	/skus/{sku_id}	Delete a SKU
-
-**### 🏗️ Architecture & Bug Fixes Applied**
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 ## 5. Testing the API
 
@@ -209,13 +176,7 @@ Select `POST /skus` and enter this example:
 }
 ```
 
-<<<<<<< HEAD
 A successful response from the updated implementation should return `201 Created`:
-=======
-**### 📁 Source Code Files**
-backend/requirements.txt
-text
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 ```json
 {
@@ -619,7 +580,6 @@ def health_check():
     return {"status": "healthy"}
 ```
 
-<<<<<<< HEAD
 ## 9. Development Roadmap
 
 - [x] Set up the FastAPI backend.
@@ -635,14 +595,4 @@ def health_check():
 - [ ] Automate report processing.
 - [ ] Build a frontend dashboard.
 
-## 10. License
 
-No open-source license has been selected yet. Until a license is added, do not assume that the project is available for unrestricted reuse.
-
----
-
-**Repository:** https://github.com/utunalam/supply-chain-forecast
-
-**Current focus:** Building a reliable SKU management API as the foundation for future sales forecasting and inventory replenishment features.
-=======
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
