@@ -1,8 +1,7 @@
-
 from fastapi import FastAPI, HTTPException
 from database import get_db_connection
 from models import create_tables
-from schemas import SKUCreate, SKUUpdate
+from schemas import SKUCreate, SKUUpdate, SKUResponse
 
 app = FastAPI(
     title="Supply Chain Forecasting API",
@@ -11,14 +10,18 @@ app = FastAPI(
 )
 
 
-# Create database tables
-connection = get_db_connection()
-create_tables(connection)
-connection.close()
+# Create database tables once at startup (not at import time)
+@app.on_event("startup")
+def startup():
+    connection = get_db_connection()
+    try:
+        create_tables(connection)
+    finally:
+        connection.close()
 
 
 # CREATE: Add a new SKU
-@app.post("/skus")
+@app.post("/skus", response_model=SKUResponse, status_code=201)
 def create_sku(sku: SKUCreate):
     connection = get_db_connection()
 
@@ -41,14 +44,8 @@ def create_sku(sku: SKUCreate):
         connection.commit()
         new_id = cursor.lastrowid
 
-        return {
-            "message": "SKU created successfully",
-            "id": new_id,
-            "sku_code": sku.sku_code,
-            "product_name": sku.product_name,
-            "category": sku.category,
-            "is_active": sku.is_active
-        }
+        cursor.execute("SELECT * FROM skus WHERE id = ?", (new_id,))
+        return dict(cursor.fetchone())
 
     except Exception as error:
         connection.rollback()
@@ -83,7 +80,7 @@ def get_skus():
 
 
 # READ: Get one SKU by ID
-@app.get("/skus/{sku_id}")
+@app.get("/skus/{sku_id}", response_model=SKUResponse)
 def get_sku(sku_id: int):
     connection = get_db_connection()
 
@@ -109,7 +106,7 @@ def get_sku(sku_id: int):
 
 
 # UPDATE: Update a SKU
-@app.patch("/skus/{sku_id}")
+@app.patch("/skus/{sku_id}", response_model=SKUResponse)
 def update_sku(sku_id: int, sku: SKUUpdate):
     connection = get_db_connection()
 
@@ -129,7 +126,11 @@ def update_sku(sku_id: int, sku: SKUUpdate):
                 detail="SKU not found"
             )
 
+        # Get the fields the user actually sent
         updates = sku.model_dump(exclude_unset=True)
+
+        # Remove any fields that were explicitly set to null (treat null as "don't change")
+        updates = {k: v for k, v in updates.items() if v is not None}
 
         if not updates:
             raise HTTPException(
@@ -144,6 +145,7 @@ def update_sku(sku_id: int, sku: SKUUpdate):
             "is_active"
         }
 
+        # Validate field names (security check)
         for field in updates:
             if field not in allowed_fields:
                 raise HTTPException(
@@ -151,14 +153,18 @@ def update_sku(sku_id: int, sku: SKUUpdate):
                     detail="Invalid field"
                 )
 
-        if "is_active" in updates and updates["is_active"] is not None:
+        # Convert boolean to integer for SQLite
+        if "is_active" in updates:
             updates["is_active"] = int(updates["is_active"])
 
-        for field, value in updates.items():
-            cursor.execute(
-                f"UPDATE skus SET {field} = ? WHERE id = ?",
-                (value, sku_id)
-            )
+        # Build a single UPDATE statement
+        set_clause = ", ".join(f"{field} = ?" for field in updates)
+        values = list(updates.values()) + [sku_id]
+
+        cursor.execute(
+            f"UPDATE skus SET {set_clause} WHERE id = ?",
+            values
+        )
 
         connection.commit()
 
