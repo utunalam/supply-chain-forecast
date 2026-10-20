@@ -67,7 +67,7 @@ Some folders and files are created or populated only when the corresponding feat
 
 ## 4. Local Setup Instructions
 
-These instructions use Windows PowerShell. Commands for macOS and Linux are also provided where relevant.
+These instructions use Windows PowerShell.
 
 ### Step 1: Clone the repository
 
