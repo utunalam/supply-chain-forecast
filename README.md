@@ -1,5 +1,3 @@
-# Supply Chain Forecasting API
-
 A beginner-friendly backend API built with Python, FastAPI, and SQLite to manage product and SKU information.
 
 This project is the foundation of a Supply Chain Forecasting System. The current version focuses on SKU management through CRUD operations (Create, Read, Update, and Delete), with sales forecasting, inventory analysis, and replenishment recommendations planned for future development.
@@ -89,13 +87,6 @@ cd backend
 python -m venv .venv
 ```
 
-**macOS/Linux:**
-
-```bash
-cd backend
-python3 -m venv .venv
-```
-
 A virtual environment keeps this project's Python packages separate from other projects.
 
 ### Step 3: Activate the virtual environment
@@ -114,11 +105,6 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
 Then activate the environment again.
 
-**macOS/Linux:**
-
-```bash
-source .venv/bin/activate
-```
 
 ### Step 4: Install dependencies
 
@@ -594,5 +580,3 @@ def health_check():
 - [ ] Generate SKU-level replenishment recommendations.
 - [ ] Automate report processing.
 - [ ] Build a frontend dashboard.
-
-
