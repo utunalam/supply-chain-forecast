@@ -18,7 +18,7 @@ A production-ready backend API built with Python, FastAPI, and SQLite for managi
 git clone https://github.com/utunalam/supply-chain-forecast.git
 cd supply-chain-forecast
 
-2. Create and activate a virtual environment
+**### 2. Create and activate a virtual environment**
 
 Windows (PowerShell):
 powershell
@@ -26,20 +26,20 @@ powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-3. Install dependencies
+**### 3. Install dependencies**
 powershell
 
 cd backend
 python -m pip install -r requirements.txt
 
-4. Run the server
+**### 4. Run the server**
 
 From the backend directory:
 powershell
 
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
-5. Test the API
+**### 5. Test the API**
 
 Open your browser and go to:
 
@@ -47,7 +47,7 @@ Open your browser and go to:
 
     Health Check: http://127.0.0.1:8000/health
 
-📡 API Endpoints
+**### 📡 API Endpoints**
 Method	Endpoint	Description
 GET	/health	Health check endpoint
 POST	/skus	Create a new SKU (Returns 201 Created)
@@ -56,7 +56,7 @@ GET	/skus/{sku_id}	Get a single SKU by ID
 PATCH	/skus/{sku_id}	Update specific fields of a SKU
 DELETE	/skus/{sku_id}	Delete a SKU
 
-🏗️ Architecture & Bug Fixes Applied
+**### 🏗️ Architecture & Bug Fixes Applied**
 
 During development, the following production-grade improvements were implemented:
 
@@ -72,7 +72,7 @@ During development, the following production-grade improvements were implemented
 
     Strict Validation: Added min_length and max_length constraints to all text fields.
 
-📁 Source Code Files
+**### 📁 Source Code Files**
 backend/requirements.txt
 text
 
@@ -286,13 +286,3 @@ def read_root():
 def health_check():
     return {"status": "healthy"}
 
-text
-
-
-### Step 2: Push to GitHub
-Once you've saved the `README.md` file (`Ctrl + S`), run these commands in your terminal to push the final version to your repository:
-
-```powershell
-git add README.md
-git commit -m "docs: add all-in-one setup guide and source code to README"
-git push
