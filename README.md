@@ -1,6 +1,8 @@
-A beginner-friendly backend API built with Python, FastAPI, and SQLite to manage product and SKU information.
+# Supply Chain Forecasting System
 
-This project is the foundation of a Supply Chain Forecasting System. The current version focuses on SKU management through CRUD operations (Create, Read, Update, and Delete), with sales forecasting, inventory analysis, and replenishment recommendations planned for future development.
+A beginner-friendly backend API built with Python, FastAPI, SQLAlchemy, and SQLite to manage product and SKU information.
+
+This project is the foundation of a Supply Chain Forecasting System. The current version focuses on SKU management through CRUD operations (Create, Read, Update, and Delete). Sales forecasting, inventory analysis, Excel report processing, and replenishment recommendations are planned for future development.
 
 **Project status:** In development  
 **Current version:** 0.1.0
@@ -13,23 +15,25 @@ This project is the foundation of a Supply Chain Forecasting System. The current
 4. [Local Setup Instructions](#4-local-setup-instructions)
 5. [Testing the API](#5-testing-the-api)
 6. [API Endpoints](#6-api-endpoints)
-7. [Architecture and Improvements](#7-architecture-and-improvements)
-8. [Source Code](#8-source-code)
-9. [Development Roadmap](#9-development-roadmap)
+7. [How the Backend Works](#7-how-the-backend-works)
+8. [Development Roadmap](#8-development-roadmap)
 
 ## 1. Project Overview
 
 Managing product information is an important part of supply chain management. Before a system can forecast demand or recommend inventory replenishment, it needs a reliable way to store and retrieve product data.
 
-This project starts with a backend API that allows users to:
+The current backend allows users to:
 
 - Create new SKU records.
-- Retrieve all products or a specific product.
-- Update product information.
-- Delete product records.
+- Retrieve all SKUs or a specific SKU.
+- Update selected SKU fields.
+- Delete SKU records.
 - Check whether the API is running.
+- Validate incoming data using Pydantic schemas.
 
-The long-term goal is to expand the system to process daily sales and inventory reports, forecast demand, and recommend replenishment quantities.
+The application uses SQLAlchemy ORM to interact with a local SQLite database.
+
+The long-term goal is to expand the system to process daily sales and inventory reports, forecast demand, and recommend SKU-level replenishment quantities.
 
 ## 2. Technology Stack
 
@@ -37,8 +41,9 @@ The long-term goal is to expand the system to process daily sales and inventory 
 |---|---|
 | Python 3.10+ | Main programming language |
 | FastAPI | Backend API framework |
+| SQLAlchemy | Object-relational mapper (ORM) for database operations |
 | SQLite | Local database |
-| Pydantic | Request data validation |
+| Pydantic | Request validation and response schemas |
 | Uvicorn | Runs the API server |
 | Git and GitHub | Version control and project hosting |
 
@@ -47,23 +52,25 @@ The long-term goal is to expand the system to process daily sales and inventory 
 ```text
 supply-chain-forecast/
 ├── backend/
-│   ├── .venv/              # Local Python environment (not committed)
-│   ├── requirements.txt    # Python dependencies
-│   ├── main.py             # API endpoints
-│   ├── database.py         # Database connection
-│   ├── models.py           # Database table creation
-│   ├── schemas.py          # Request and response schemas
-│   └── supply_chain.db     # Local database (generated)
+│   ├── .venv/                 # Local Python environment
+│   ├── requirements.txt       # Python dependencies
+│   ├── main.py                # API endpoints and application setup
+│   ├── database.py            # SQLAlchemy engine and sessions
+│   ├── models.py              # SQLAlchemy database models
+│   ├── schemas.py             # Request and response validation
+│   └── supply_chain.db        # Local SQLite database
 ├── data/
-│   ├── incoming/           # Planned input reports
-│   └── archive/            # Planned archived reports
-├── logs/                   # Planned application logs
-├── reports/                # Planned generated reports
+│   ├── incoming/              # Planned input reports
+│   └── archive/               # Planned archived reports
+├── logs/                      # Planned application logs
+├── reports/                   # Planned generated reports
 ├── .gitignore
 └── README.md
 ```
 
-Some folders and files are created or populated only when the corresponding features are implemented or the application runs.
+Some folders and files are planned for future features and may not yet contain application code or data.
+
+The `.venv` directory contains the project's local Python environment and should not be committed to GitHub.
 
 ## 4. Local Setup Instructions
 
@@ -71,7 +78,7 @@ These instructions use Windows PowerShell.
 
 ### Step 1: Clone the repository
 
-```bash
+```powershell
 git clone https://github.com/utunalam/supply-chain-forecast.git
 cd supply-chain-forecast
 ```
@@ -79,8 +86,6 @@ cd supply-chain-forecast
 ### Step 2: Create a virtual environment
 
 From the project root, run:
-
-**Windows (PowerShell):**
 
 ```powershell
 cd backend
@@ -90,8 +95,6 @@ python -m venv .venv
 A virtual environment keeps this project's Python packages separate from other projects.
 
 ### Step 3: Activate the virtual environment
-
-**Windows (PowerShell):**
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
@@ -105,15 +108,15 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
 Then activate the environment again.
 
-
 ### Step 4: Install dependencies
 
 Make sure the terminal is in the `backend` directory and the virtual environment is activated.
 
 ```powershell
-python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
+
+The dependencies are defined in `backend/requirements.txt`, including FastAPI, Uvicorn, and SQLAlchemy.
 
 ### Step 5: Run the API server
 
@@ -135,7 +138,7 @@ Open these URLs in your browser:
 - **Health check:** http://127.0.0.1:8000/health
 - **Root endpoint:** http://127.0.0.1:8000/
 
-FastAPI generates the interactive API documentation automatically, so you can test endpoints without building a frontend.
+FastAPI generates interactive API documentation automatically, allowing you to test endpoints without building a frontend.
 
 ## 5. Testing the API
 
@@ -147,7 +150,7 @@ For each endpoint:
 2. Click **Try it out**.
 3. Enter the required parameters or JSON request body.
 4. Click **Execute**.
-5. Review the HTTP status code and response.
+5. Review the HTTP status code and response body.
 
 ### Create a SKU
 
@@ -162,32 +165,29 @@ Select `POST /skus` and enter this example:
 }
 ```
 
-A successful response from the updated implementation should return `201 Created`:
+A successful response returns `201 Created` and the newly created SKU, including its database-generated ID and creation timestamp.
 
-```json
-{
-  "id": 1,
-  "sku_code": "ADI-001-BLK-M",
-  "product_name": "Adidas Black Shirt Medium",
-  "category": "Apparel",
-  "is_active": true,
-  "created_at": "2026-10-20 03:00:00"
-}
-```
+The actual ID and timestamp depend on the database state and execution time.
 
-The ID and timestamp are illustrative. Your actual response will depend on the database state and execution time.
+**Important:** Use a unique SKU code. Submitting a code that already exists returns `409 Conflict`.
 
 ### Retrieve all SKUs
 
-Select `GET /skus` and click **Execute** to retrieve all stored product records.
+Select `GET /skus` and click **Execute** to retrieve all stored SKU records.
+
+No input parameters are required.
 
 ### Retrieve one SKU
 
-Select `GET /skus/{sku_id}` and enter an existing product ID, such as `1`.
+Select `GET /skus/{sku_id}` and enter an existing product ID, such as `1` or `4`, depending on your database.
+
+A successful request returns `200 OK`. An ID that does not exist returns `404 Not Found`.
 
 ### Update a SKU
 
-Select `PATCH /skus/{sku_id}` and enter the product ID. For example:
+Select `PATCH /skus/{sku_id}` and enter the product ID.
+
+For example, to update only the category:
 
 ```json
 {
@@ -197,11 +197,13 @@ Select `PATCH /skus/{sku_id}` and enter the product ID. For example:
 
 Only the supplied field is intended to change.
 
+**Important:** Replace all example values in Swagger's request body with the values you actually intend to submit. Do not submit placeholder values such as `"string"` unless you deliberately want to save that text.
+
 ### Delete a SKU
 
 Select `DELETE /skus/{sku_id}` and enter the product ID.
 
-**Warning:** Deleting a SKU removes the record from the database. Use this endpoint carefully when testing.
+**Warning:** Deleting a SKU permanently removes that record from the local database. Use this endpoint carefully when testing.
 
 ## 6. API Endpoints
 
@@ -221,358 +223,82 @@ Select `DELETE /skus/{sku_id}` and enter the product ID.
 |---|---|
 | `200 OK` | Request completed successfully |
 | `201 Created` | A new SKU was created |
-| `400 Bad Request` | Request is invalid, such as an empty update |
+| `400 Bad Request` | The update request is invalid, such as an empty update |
 | `404 Not Found` | The requested SKU does not exist |
 | `409 Conflict` | The SKU code already exists |
 | `422 Unprocessable Entity` | Request validation failed |
-| `500 Internal Server Error` | An unexpected server error occurred |
 
-The exact status code depends on the endpoint implementation. For example, the earlier version of this project returned `200 OK` for SKU creation, whereas the updated version uses `201 Created`.
+## 7. How the Backend Works
 
-## 7. Architecture and Improvements
+The backend is divided into four main Python files.
 
-The updated implementation is intended to introduce the following improvements. These descriptions apply only after the corresponding changes have been made to the source files.
+### `main.py` — API endpoints
 
-1. **Absolute database path:** Uses the location of `database.py` to determine where the SQLite database is stored, reducing confusion when the server is started from a different working directory.
-2. **Startup table creation:** Creates database tables during application startup rather than when the module is imported.
-3. **Response models:** Uses Pydantic response schemas to define a consistent response structure.
-4. **Optimized updates:** Uses one SQL `UPDATE` statement to update multiple supplied fields.
-5. **Null handling:** Ignores fields explicitly supplied as `null` during a partial update, preventing accidental clearing of existing values.
-6. **Strict input validation:** Applies minimum and maximum text lengths to SKU fields.
-7. **Duplicate SKU protection:** Returns a conflict response when a duplicate SKU code is submitted.
+Defines the FastAPI application and the endpoints for creating, retrieving, updating, and deleting SKUs.
 
-These are application-level improvements, not a claim that the current system is fully production-ready.
+It also uses dependency injection to obtain database sessions for requests.
 
-## 8. Source Code
+### `database.py` — Database connection
 
-The following files describe the updated implementation. Ensure the contents match the actual files in your repository before using this section as documentation.
+Configures the SQLAlchemy engine, session factory, and database base class.
 
-### `backend/requirements.txt`
+The SQLite database is stored beside `database.py`, so the database location does not depend on the terminal's current working directory.
 
-```text
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
-```
+The `get_db()` dependency provides a database session to an endpoint and closes it when the request finishes.
 
-### `backend/database.py`
+### `models.py` — Database model
 
-```python
-import sqlite3
-from pathlib import Path
+Defines the `SKU` SQLAlchemy model, which maps Python attributes to columns in the `skus` database table.
 
-# Keep the database beside this Python file.
-DATABASE_NAME = Path(__file__).parent / "supply_chain.db"
+The model includes:
 
+- `id`
+- `sku_code`
+- `product_name`
+- `category`
+- `is_active`
+- `created_at`
 
-def get_db_connection():
-    connection = sqlite3.connect(DATABASE_NAME)
-    connection.row_factory = sqlite3.Row
-    return connection
-```
+### `schemas.py` — Request and response validation
 
-### `backend/models.py`
+Defines the Pydantic schemas used to validate incoming data and structure API responses.
 
-```python
-def create_tables(connection):
-    cursor = connection.cursor()
+- `SKUCreate` defines the fields required or accepted when creating a SKU.
+- `SKUUpdate` defines the fields that can be supplied for a partial update.
+- `SKUResponse` defines the fields returned to API clients.
 
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS skus (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            sku_code TEXT UNIQUE NOT NULL,
-            product_name TEXT NOT NULL,
-            category TEXT,
-            is_active INTEGER DEFAULT 1,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
+### What is SQLAlchemy ORM?
 
-    connection.commit()
-```
+ORM stands for **Object-Relational Mapper**.
 
-### `backend/schemas.py`
+Instead of manually writing SQL statements for every database operation, SQLAlchemy lets the application work with Python objects that represent database records.
+
+For example:
 
 ```python
-from pydantic import BaseModel, Field
-
-
-class SKUCreate(BaseModel):
-    sku_code: str = Field(min_length=1, max_length=64)
-    product_name: str = Field(min_length=1, max_length=255)
-    category: str | None = Field(default=None, max_length=100)
-    is_active: bool = True
-
-
-class SKUUpdate(BaseModel):
-    sku_code: str | None = Field(
-        default=None,
-        min_length=1,
-        max_length=64
-    )
-    product_name: str | None = Field(
-        default=None,
-        min_length=1,
-        max_length=255
-    )
-    category: str | None = Field(
-        default=None,
-        max_length=100
-    )
-    is_active: bool | None = None
-
-
-class SKUResponse(BaseModel):
-    id: int
-    sku_code: str
-    product_name: str
-    category: str | None
-    is_active: bool
-    created_at: str
+db.add(new_sku)
+db.commit()
+db.refresh(new_sku)
 ```
 
-### `backend/main.py`
+These operations add a new SKU object to the database session, save the transaction, and refresh the object with the saved database values.
 
-```python
-from fastapi import FastAPI, HTTPException
-from database import get_db_connection
-from models import create_tables
-from schemas import SKUCreate, SKUUpdate, SKUResponse
+This approach separates database operations from API request handling and makes the code easier to maintain as the project grows.
 
-app = FastAPI(
-    title="Supply Chain Forecasting API",
-    description=(
-        "API for SKU data, sales, inventory, forecasting, "
-        "and replenishment."
-    ),
-    version="0.1.0"
-)
+## 8. Development Roadmap
 
-
-@app.on_event("startup")
-def startup():
-    connection = get_db_connection()
-    try:
-        create_tables(connection)
-    finally:
-        connection.close()
-
-
-# CREATE: Add a new SKU
-@app.post("/skus", response_model=SKUResponse, status_code=201)
-def create_sku(sku: SKUCreate):
-    connection = get_db_connection()
-
-    try:
-        cursor = connection.cursor()
-        cursor.execute(
-            """
-            INSERT INTO skus (
-                sku_code, product_name, category, is_active
-            )
-            VALUES (?, ?, ?, ?)
-            """,
-            (
-                sku.sku_code,
-                sku.product_name,
-                sku.category,
-                int(sku.is_active)
-            )
-        )
-        connection.commit()
-        new_id = cursor.lastrowid
-
-        cursor.execute(
-            "SELECT * FROM skus WHERE id = ?",
-            (new_id,)
-        )
-        return dict(cursor.fetchone())
-
-    except Exception as error:
-        connection.rollback()
-
-        if "UNIQUE constraint failed" in str(error):
-            raise HTTPException(
-                status_code=409,
-                detail="This SKU code already exists"
-            )
-
-        raise HTTPException(
-            status_code=500,
-            detail="Could not create SKU"
-        )
-
-    finally:
-        connection.close()
-
-
-# READ: Get all SKUs
-@app.get("/skus", response_model=list[SKUResponse])
-def get_skus():
-    connection = get_db_connection()
-
-    try:
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM skus ORDER BY id")
-        rows = cursor.fetchall()
-        return [dict(row) for row in rows]
-
-    finally:
-        connection.close()
-
-
-# READ: Get one SKU by ID
-@app.get("/skus/{sku_id}", response_model=SKUResponse)
-def get_sku(sku_id: int):
-    connection = get_db_connection()
-
-    try:
-        cursor = connection.cursor()
-        cursor.execute(
-            "SELECT * FROM skus WHERE id = ?",
-            (sku_id,)
-        )
-        row = cursor.fetchone()
-
-        if row is None:
-            raise HTTPException(
-                status_code=404,
-                detail="SKU not found"
-            )
-
-        return dict(row)
-
-    finally:
-        connection.close()
-
-
-# UPDATE: Update a SKU
-@app.patch("/skus/{sku_id}", response_model=SKUResponse)
-def update_sku(sku_id: int, sku: SKUUpdate):
-    connection = get_db_connection()
-
-    try:
-        cursor = connection.cursor()
-        cursor.execute(
-            "SELECT * FROM skus WHERE id = ?",
-            (sku_id,)
-        )
-        existing_sku = cursor.fetchone()
-
-        if existing_sku is None:
-            raise HTTPException(
-                status_code=404,
-                detail="SKU not found"
-            )
-
-        updates = sku.model_dump(exclude_unset=True)
-
-        # Ignore fields explicitly supplied as null.
-        updates = {
-            key: value
-            for key, value in updates.items()
-            if value is not None
-        }
-
-        if not updates:
-            raise HTTPException(
-                status_code=400,
-                detail="No fields provided for update"
-            )
-
-        if "is_active" in updates:
-            updates["is_active"] = int(updates["is_active"])
-
-        set_clause = ", ".join(
-            f"{field} = ?" for field in updates
-        )
-        values = list(updates.values()) + [sku_id]
-
-        cursor.execute(
-            f"UPDATE skus SET {set_clause} WHERE id = ?",
-            values
-        )
-        connection.commit()
-
-        cursor.execute(
-            "SELECT * FROM skus WHERE id = ?",
-            (sku_id,)
-        )
-        return dict(cursor.fetchone())
-
-    except HTTPException:
-        raise
-
-    except Exception as error:
-        connection.rollback()
-
-        if "UNIQUE constraint failed" in str(error):
-            raise HTTPException(
-                status_code=409,
-                detail="This SKU code already exists"
-            )
-
-        raise HTTPException(
-            status_code=500,
-            detail="Could not update SKU"
-        )
-
-    finally:
-        connection.close()
-
-
-# DELETE: Delete a SKU
-@app.delete("/skus/{sku_id}")
-def delete_sku(sku_id: int):
-    connection = get_db_connection()
-
-    try:
-        cursor = connection.cursor()
-        cursor.execute(
-            "SELECT * FROM skus WHERE id = ?",
-            (sku_id,)
-        )
-        existing_sku = cursor.fetchone()
-
-        if existing_sku is None:
-            raise HTTPException(
-                status_code=404,
-                detail="SKU not found"
-            )
-
-        cursor.execute(
-            "DELETE FROM skus WHERE id = ?",
-            (sku_id,)
-        )
-        connection.commit()
-
-        return {
-            "message": "SKU deleted successfully",
-            "id": sku_id
-        }
-
-    finally:
-        connection.close()
-
-
-@app.get("/")
-def read_root():
-    return {
-        "message": "Supply Chain Forecasting API is running"
-    }
-
-
-@app.get("/health")
-def health_check():
-    return {"status": "healthy"}
-```
-
-## 9. Development Roadmap
+### Completed
 
 - [x] Set up the FastAPI backend.
 - [x] Connect to a local SQLite database.
-- [x] Create the SKU database table.
+- [x] Define the SQLAlchemy database model.
 - [x] Implement SKU CRUD endpoints.
+- [x] Add Pydantic request and response schemas.
 - [x] Generate interactive API documentation.
+- [x] Configure Python dependencies in `requirements.txt`.
+
+### Planned
+
 - [ ] Add automated tests.
 - [ ] Import daily sales and inventory Excel reports.
 - [ ] Store and validate historical data.
@@ -580,3 +306,5 @@ def health_check():
 - [ ] Generate SKU-level replenishment recommendations.
 - [ ] Automate report processing.
 - [ ] Build a frontend dashboard.
+
+The current version is the foundation of the larger system. The planned forecasting and replenishment features will be developed in later stages.
