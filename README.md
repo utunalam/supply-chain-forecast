@@ -82,7 +82,6 @@ cd supply-chain-forecast
 ### Step 2: Create a virtual environment
 =======
 1. Create and activate a virtual environment
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 From the project root, run:
 
@@ -94,18 +93,10 @@ python -m venv .venv
 
 2. Install dependencies
 powershell
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 ```powershell
 cd backend
 python -m venv .venv
-```
-
-**macOS/Linux:**
-
-```bash
-cd backend
-python3 -m venv .venv
 ```
 
 A virtual environment keeps this project's Python packages separate from other projects.
@@ -126,11 +117,6 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
 Then activate the environment again.
 
-**macOS/Linux:**
-
-```bash
-source .venv/bin/activate
-```
 
 ### Step 4: Install dependencies
 
@@ -145,7 +131,6 @@ python -m pip install -r requirements.txt
 ### Step 5: Run the API server
 =======
 3. Run the server
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 From the `backend` directory, run:
 
@@ -157,7 +142,6 @@ python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 Keep the terminal open while using the API.
 =======
 4. Test the API
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 The `--reload` option automatically restarts the development server when Python files change.
 
@@ -170,7 +154,7 @@ Open these URLs in your browser:
 - **Health check:** http://127.0.0.1:8000/health
 - **Root endpoint:** http://127.0.0.1:8000/
 
-FastAPI generates the interactive API documentation automatically, so you can test endpoints without building a frontend.
+FastAPI automatically generates interactive API documentation, so you can test endpoints without building a frontend.
 =======
 **### 📡 API Endpoints**
 Method	Endpoint	Description
@@ -182,7 +166,6 @@ PATCH	/skus/{sku_id}	Update specific fields of a SKU
 DELETE	/skus/{sku_id}	Delete a SKU
 
 **### 🏗️ Architecture & Bug Fixes Applied**
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 ## 5. Testing the API
 
@@ -215,7 +198,6 @@ A successful response from the updated implementation should return `201 Created
 **### 📁 Source Code Files**
 backend/requirements.txt
 text
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
 
 ```json
 {
@@ -248,7 +230,7 @@ Select `PATCH /skus/{sku_id}` and enter the product ID. For example:
 }
 ```
 
-Only the supplied field is intended to change.
+Only the supplied field will change.
 
 ### Delete a SKU
 
@@ -284,7 +266,7 @@ The exact status code depends on the endpoint implementation. For example, the e
 
 ## 7. Architecture and Improvements
 
-The updated implementation is intended to introduce the following improvements. These descriptions apply only after the corresponding changes have been made to the source files.
+The updated implementation introduces the following improvements. These descriptions apply only after you make the corresponding changes to the source files.
 
 1. **Absolute database path:** Uses the location of `database.py` to determine where the SQLite database is stored, reducing confusion when the server is started from a different working directory.
 2. **Startup table creation:** Creates database tables during application startup rather than when the module is imported.
@@ -634,15 +616,3 @@ def health_check():
 - [ ] Generate SKU-level replenishment recommendations.
 - [ ] Automate report processing.
 - [ ] Build a frontend dashboard.
-
-## 10. License
-
-No open-source license has been selected yet. Until a license is added, do not assume that the project is available for unrestricted reuse.
-
----
-
-**Repository:** https://github.com/utunalam/supply-chain-forecast
-
-**Current focus:** Building a reliable SKU management API as the foundation for future sales forecasting and inventory replenishment features.
-=======
->>>>>>> 6f91573237b02746dc90314dd3485d873fa707d5
