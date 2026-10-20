@@ -125,7 +125,6 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-<<<<<<< HEAD
 ### Step 5: Run the API server
 =======
 3. Run the server
@@ -136,7 +135,6 @@ From the `backend` directory, run:
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-<<<<<<< HEAD
 Keep the terminal open while using the API.
 =======
 4. Test the API
@@ -147,7 +145,6 @@ The `--reload` option automatically restarts the development server when Python 
 
 Open these URLs in your browser:
 
-<<<<<<< HEAD
 - **Interactive API documentation:** http://127.0.0.1:8000/docs
 - **Health check:** http://127.0.0.1:8000/health
 - **Root endpoint:** http://127.0.0.1:8000/
@@ -190,7 +187,6 @@ Select `POST /skus` and enter this example:
 }
 ```
 
-<<<<<<< HEAD
 A successful response from the updated implementation should return `201 Created`:
 =======
 **### 📁 Source Code Files**
