@@ -73,7 +73,6 @@ These instructions use Windows PowerShell. Commands for macOS and Linux are also
 
 ### Step 1: Clone the repository
 
-<<<<<<< HEAD
 ```bash
 git clone https://github.com/utunalam/supply-chain-forecast.git
 cd supply-chain-forecast
@@ -85,7 +84,6 @@ cd supply-chain-forecast
 
 From the project root, run:
 
-<<<<<<< HEAD
 **Windows (PowerShell):**
 =======
 python -m venv .venv
