@@ -1,0 +1,85 @@
+﻿data_label,record_type,inventory_item_id,sales_item_id,product_description,date,completed_units_sold,average_daily_demand,forecast_units,forecast_method
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-03,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-04,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-05,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-06,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-07,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-08,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-09,4,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-10,1,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-11,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-12,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-13,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-14,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-15,2,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-16,0,,,
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-17,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-18,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-19,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-20,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-21,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-22,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-23,,0.5,0.5,14-day average baseline
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-03,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-04,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-05,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-06,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-07,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-08,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-09,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-10,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-11,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-12,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-13,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-14,1,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-15,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100106,929004200106,Motion Sensor w/batteries,2026-10-16,0,,,
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-17,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-18,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-19,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-20,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-21,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-22,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100106,929004200106,Motion Sensor w/batteries,2026-10-23,,0.0714,0.0714,14-day average baseline
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-03,1,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-04,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-05,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-06,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-07,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-08,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-09,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-10,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-11,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-12,2,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-13,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-14,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-15,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-16,0,,,
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-17,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-18,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-19,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-20,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-21,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-22,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-23,,0.2143,0.2143,14-day average baseline
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-03,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-04,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-05,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-06,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-07,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-08,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-09,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-10,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-11,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-12,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-13,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-14,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-15,0,,,
+SYNTHETIC - development/testing only,DAILY_HISTORY,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-16,0,,,
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-17,,0.0,0.0,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-18,,0.0,0.0,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-19,,0.0,0.0,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-20,,0.0,0.0,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-21,,0.0,0.0,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-22,,0.0,0.0,14-day average baseline
+SYNTHETIC - development/testing only,BASELINE_FORECAST,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-23,,0.0,0.0,14-day average baseline

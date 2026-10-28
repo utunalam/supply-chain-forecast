@@ -1,0 +1,3 @@
+﻿data_label,sales_item_id,completed_units_in_window,review_note
+SYNTHETIC - development/testing only,929004200103,3.0,No approved inventory mapping; replenishment cannot be calculated safely
+SYNTHETIC - development/testing only,929004200105,3.0,No approved inventory mapping; replenishment cannot be calculated safely

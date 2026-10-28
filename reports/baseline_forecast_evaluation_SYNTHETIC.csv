@@ -1,0 +1,5 @@
+﻿data_label,inventory_item_id,sales_item_id,product_description,training_start,training_end,training_calendar_days,test_start,test_end,test_calendar_days,training_completed_units,average_daily_demand,forecast_test_period_units,actual_test_period_units,absolute_error_units,overall_mae_units,evaluation_note
+SYNTHETIC - development/testing only,929004100108,929004200102,"Sync box starter kit 55""-65"" UK",2026-10-02,2026-10-09,8,2026-10-10,2026-10-16,7,1,0.125,0.875,2,1.125,0.6562,Small synthetic sample; interpret cautiously
+SYNTHETIC - development/testing only,929004100103,929004200104,Wi-Fi LED Strip 1M 800lm extension ASEAN,2026-10-02,2026-10-09,8,2026-10-10,2026-10-16,7,4,0.5,3.5,3,0.5,0.6562,Small synthetic sample; interpret cautiously
+SYNTHETIC - development/testing only,929004100106,929004200106,Motion Sensor w/batteries,2026-10-02,2026-10-09,8,2026-10-10,2026-10-16,7,0,0.0,0.0,1,1.0,0.6562,Small synthetic sample; interpret cautiously
+SYNTHETIC - development/testing only,929004100109,929004200108,Adria ceiling WIZ 17W 65K Dim,2026-10-02,2026-10-09,8,2026-10-10,2026-10-16,7,0,0.0,0.0,0,0.0,0.6562,Small synthetic sample; interpret cautiously

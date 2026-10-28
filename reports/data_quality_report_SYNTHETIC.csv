@@ -1,0 +1,16 @@
+﻿data_label,category,check,issues_found,result,details
+SYNTHETIC - development/testing only,Data validation,Missing required inventory fields,0,PASS,"Checks item ID, description and available quantity."
+SYNTHETIC - development/testing only,Data validation,Negative inventory quantities,0,PASS,Negative stock requires investigation.
+SYNTHETIC - development/testing only,Data validation,Missing required sales fields,0,PASS,"Checks sales item ID, order date and quantity."
+SYNTHETIC - development/testing only,Data validation,Negative sales quantities,0,PASS,Negative quantities require investigation.
+SYNTHETIC - development/testing only,Product mapping,Invalid approved mapping references,0,PASS,Approved mappings must reference imported inventory and sales IDs.
+SYNTHETIC - development/testing only,Product mapping,Pending mappings,0,PASS,Pending mappings must not be used for matched forecasting.
+SYNTHETIC - development/testing only,Product mapping,Completed sales without approved mappings,3,REVIEW,Unmatched sales must remain separate pending review.
+SYNTHETIC - development/testing only,Sales validity,Future order dates,0,PASS,Orders after today's date require review.
+SYNTHETIC - development/testing only,Sales validity,Invalid order/completed date sequences,0,PASS,Completed date should not precede order date.
+SYNTHETIC - development/testing only,Sales validity,Unexpected sales statuses,0,PASS,Checks statuses against the configured expected list.
+SYNTHETIC - development/testing only,Duplicate detection,Duplicate inventory source references,0,PASS,Checks repeated source filename and row-number pairs.
+SYNTHETIC - development/testing only,Duplicate detection,Duplicate sales source references,0,PASS,Checks repeated source filename and row-number pairs.
+SYNTHETIC - development/testing only,Duplicate detection,Duplicate mapping pairs,0,PASS,Checks repeated inventory/sales ID pairs.
+SYNTHETIC - development/testing only,Stock and demand exceptions,Zero-stock inventory records,0,PASS,"Zero stock is an exception for review, not automatically an error."
+SYNTHETIC - development/testing only,Stock and demand exceptions,Approved mappings without positive completed sales,1,REVIEW,No observed demand does not mean future demand will be zero.

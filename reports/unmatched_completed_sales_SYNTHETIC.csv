@@ -1,0 +1,3 @@
+﻿data_label,window_start,window_end,sales_item_id,product_sku,item_name,completed_order_rows,completed_units_sold,mapping_status
+SYNTHETIC - development/testing only,2026-10-03,2026-10-16,929004200103,929004200103,"WiZ WFB RGB/11W RD5""/822-65 12/1CT",1,3,UNMATCHED - manual review required
+SYNTHETIC - development/testing only,2026-10-03,2026-10-16,929004200105,929004200105,"WiZ WFB TW/17W RD6""/827-65 12/1CT",1,3,UNMATCHED - manual review required
