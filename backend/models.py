@@ -1,4 +1,3 @@
-
 from datetime import date, datetime
 
 from sqlalchemy import Boolean, Date, DateTime, Float, Integer, String
@@ -30,6 +29,17 @@ class SKU(Base):
     is_active: Mapped[bool] = mapped_column(
         Boolean,
         default=True,
+        nullable=False,
+    )
+    # NEW: per-product planning settings used by /replenishment.
+    lead_time_days: Mapped[int] = mapped_column(
+        Integer,
+        default=7,
+        nullable=False,
+    )
+    safety_stock_days: Mapped[int] = mapped_column(
+        Integer,
+        default=3,
         nullable=False,
     )
     created_at: Mapped[datetime] = mapped_column(

@@ -366,3 +366,91 @@ footer {
     flex-direction: column;
   }
 }
+/* ---- Paste at the END of frontend/src/App.css ---- */
+
+.product-manager {
+  margin-top: 32px;
+}
+
+.pm-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.pm-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.product-manager input {
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid #c9ced6;
+  border-radius: 6px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.product-manager input:focus-visible,
+.product-manager button:focus-visible {
+  outline: 2px solid #2f6fdd;
+  outline-offset: 2px;
+}
+
+.pm-actions {
+  white-space: nowrap;
+}
+
+.pm-actions button,
+.secondary-button {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  margin-right: 6px;
+  border: 1px solid #c9ced6;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.product-manager button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.pm-danger {
+  color: #b42318;
+  border-color: #f0b4ae;
+}
+
+.pm-message {
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.pm-ok {
+  background: #e7f6ec;
+  color: #1a6b3a;
+}
+
+.pm-error {
+  background: #fdecea;
+  color: #b42318;
+}
+
+.pm-unlinked {
+  color: #b54708;
+}
+
+.status-inactive {
+  background: #eceef1;
+  color: #5b6472;
+}
