@@ -19,7 +19,7 @@ function readError(data, status) {
   return `Request failed (${status})`;
 }
 
-function ProductManager({ apiUrl, reportItems, onChanged }) {
+function ProductManager({ apiFetch, reportItems, onChanged }) {
   const [skus, setSkus] = useState([]);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
@@ -29,9 +29,10 @@ function ProductManager({ apiUrl, reportItems, onChanged }) {
 
   // One helper for every API call: sends JSON, throws a clear error.
   async function request(path, options = {}) {
-    const response = await fetch(`${apiUrl}${path}`, {
-      headers: { "Content-Type": "application/json" },
+    // apiFetch (from App.jsx) adds the login token to every request.
+    const response = await apiFetch(path, {
       ...options,
+      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     });
     const data = await response.json().catch(() => null);
     if (!response.ok) throw new Error(readError(data, response.status));
@@ -138,7 +139,8 @@ function ProductManager({ apiUrl, reportItems, onChanged }) {
       (item) => String(item.inventory_item_id).trim() === sku.sku_code
     );
     if (!row) return "No sales or stock data yet";
-    return `In report · stock ${row.available_stock_latest_snapshot || "—"}`;
+    const stock = Number(row.available_stock_latest_snapshot);
+    return `In report · stock ${Number.isFinite(stock) ? stock : "—"}`;
   }
 
   return (

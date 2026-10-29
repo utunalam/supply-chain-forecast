@@ -1,11 +1,14 @@
 import csv
 import math
 import os
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, HTTPException, status
+import httpx
+from fastapi import Depends, FastAPI, HTTPException, Security, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import inspect, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -13,6 +16,107 @@ from sqlalchemy.orm import Session
 from database import Base, SessionLocal, engine, get_db
 from models import SKU
 from schemas import SKUCreate, SKUResponse, SKUUpdate
+
+
+# Local development: read settings from backend/.env if it exists.
+# On Render, the same settings come from the Environment page instead.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).resolve().parent / ".env")
+except ImportError:
+    pass
+
+
+# ---------- Login and access control ----------
+
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
+SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
+
+# Only these emails may use the app, e.g. "you@co.com,boss@co.com".
+# If this is empty, nobody gets in: the safe default.
+ALLOWED_EMAILS = {
+    email.strip().lower()
+    for email in os.getenv("ALLOWED_EMAILS", "").split(",")
+    if email.strip()
+}
+
+# Remember a checked token for 60 seconds, so we don't ask Supabase
+# again on every single click.
+TOKEN_CACHE_SECONDS = 60
+_token_cache = {}
+
+# Reads the "Authorization: Bearer <token>" header. It also adds an
+# "Authorize" button to the /docs page.
+bearer_scheme = HTTPBearer(auto_error=False)
+
+
+def get_email_from_token(token: str) -> str:
+    """Ask Supabase whether this login token is real, and whose it is."""
+    if not SUPABASE_URL or not SUPABASE_ANON_KEY:
+        raise HTTPException(
+            status_code=500,
+            detail="Login is not configured on the server.",
+        )
+
+    cached = _token_cache.get(token)
+    if cached and time.time() - cached[1] < TOKEN_CACHE_SECONDS:
+        return cached[0]
+
+    try:
+        response = httpx.get(
+            f"{SUPABASE_URL}/auth/v1/user",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "apikey": SUPABASE_ANON_KEY,
+            },
+            timeout=10,
+        )
+    except httpx.HTTPError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Could not reach the login service. Please try again.",
+        ) from exc
+
+    if response.status_code != 200:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Your session is invalid or has expired. Please sign in again.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    email = (response.json().get("email") or "").strip().lower()
+
+    if len(_token_cache) > 500:
+        _token_cache.clear()
+    _token_cache[token] = (email, time.time())
+
+    return email
+
+
+def require_user(
+    credentials: HTTPAuthorizationCredentials | None = Security(bearer_scheme),
+) -> str:
+    """
+    Runs before every protected endpoint.
+    No token or a fake token -> 401. Real login but not approved -> 403.
+    """
+    if credentials is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Please sign in.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    email = get_email_from_token(credentials.credentials)
+
+    if email not in ALLOWED_EMAILS:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your account is not authorised to use this app.",
+        )
+
+    return email
 
 
 # Paths to the existing synthetic reports.
@@ -190,7 +294,7 @@ app = FastAPI(
         "API for SKU data, sales, inventory, forecasting, "
         "and replenishment."
     ),
-    version="0.2.0",
+    version="0.3.0",
     lifespan=lifespan,
 )
 
@@ -223,7 +327,13 @@ def health_check():
     return {"status": "healthy"}
 
 
-@app.get("/replenishment")
+# Who am I? The website uses this to check access after sign-in.
+@app.get("/me")
+def read_me(email: str = Depends(require_user)):
+    return {"email": email}
+
+
+@app.get("/replenishment", dependencies=[Depends(require_user)])
 def get_replenishment_report(db: Session = Depends(get_db)):
     """Return the report, recalculated with each product's SKU settings."""
     try:
@@ -274,6 +384,7 @@ def get_replenishment_report(db: Session = Depends(get_db)):
     "/skus",
     response_model=SKUResponse,
     status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(require_user)],
 )
 def create_sku(sku: SKUCreate, db: Session = Depends(get_db)):
     new_sku = SKU(**sku.model_dump())
@@ -293,20 +404,28 @@ def create_sku(sku: SKUCreate, db: Session = Depends(get_db)):
 
 
 # Add every report product that is missing from the SKU list.
-@app.post("/skus/sync-from-report")
+@app.post("/skus/sync-from-report", dependencies=[Depends(require_user)])
 def sync_skus_from_report(db: Session = Depends(get_db)):
     added = add_report_products_to_sku_list(db)
     return {"message": f"Added {added} product(s) from the report", "added": added}
 
 
 # READ all SKUs.
-@app.get("/skus", response_model=list[SKUResponse])
+@app.get(
+    "/skus",
+    response_model=list[SKUResponse],
+    dependencies=[Depends(require_user)],
+)
 def get_skus(db: Session = Depends(get_db)):
     return db.query(SKU).order_by(SKU.id).all()
 
 
 # READ one SKU by ID.
-@app.get("/skus/{sku_id}", response_model=SKUResponse)
+@app.get(
+    "/skus/{sku_id}",
+    response_model=SKUResponse,
+    dependencies=[Depends(require_user)],
+)
 def get_sku(sku_id: int, db: Session = Depends(get_db)):
     sku = db.get(SKU, sku_id)
 
@@ -320,7 +439,11 @@ def get_sku(sku_id: int, db: Session = Depends(get_db)):
 
 
 # UPDATE an existing SKU.
-@app.patch("/skus/{sku_id}", response_model=SKUResponse)
+@app.patch(
+    "/skus/{sku_id}",
+    response_model=SKUResponse,
+    dependencies=[Depends(require_user)],
+)
 def update_sku(
     sku_id: int,
     sku: SKUUpdate,
@@ -360,7 +483,7 @@ def update_sku(
 
 
 # DELETE an existing SKU.
-@app.delete("/skus/{sku_id}")
+@app.delete("/skus/{sku_id}", dependencies=[Depends(require_user)])
 def delete_sku(sku_id: int, db: Session = Depends(get_db)):
     existing_sku = db.get(SKU, sku_id)
 

@@ -454,3 +454,62 @@ footer {
   background: #eceef1;
   color: #5b6472;
 }
+.login-page {
+  display: grid;
+  place-items: center;
+  min-height: 80vh;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 28px;
+  border: 1px solid #dfe3e8;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-hint {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.login-form input {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #c9ced6;
+  border-radius: 6px;
+}
+
+.login-form input:focus-visible,
+.login-card button:focus-visible {
+  outline: 2px solid #2f6fdd;
+  outline-offset: 2px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.user-chip {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}

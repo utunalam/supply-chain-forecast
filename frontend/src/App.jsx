@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Login from "./Login";
 import ProductManager from "./ProductManager";
+import { supabase, supabaseConfigured } from "./supabaseClient";
 import "./App.css";
 
 // Remove any trailing slash so we never call "//replenishment".
@@ -29,6 +31,82 @@ function statusClass(recommendation = "") {
 }
 
 function App() {
+  // ---------- 1. Who is signed in? ----------
+  const [session, setSession] = useState(null);
+  const [authReady, setAuthReady] = useState(false);
+
+  useEffect(() => {
+    if (!supabaseConfigured) {
+      setAuthReady(true);
+      return undefined;
+    }
+
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setAuthReady(true);
+    });
+
+    // Runs on sign-in, sign-out and automatic token refresh.
+    const { data } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  // Keep the newest token in a ref, so apiFetch always sends it.
+  const tokenRef = useRef(null);
+  tokenRef.current = session?.access_token ?? null;
+  const userId = session?.user?.id;
+  const userEmail = session?.user?.email ?? "";
+
+  // ---------- 2. Every API call goes through here ----------
+  // "checking" | "allowed" | "denied" | "error"
+  const [access, setAccess] = useState("checking");
+
+  const apiFetch = useCallback(async (path, options = {}) => {
+    const response = await fetch(`${API_URL}${path}`, {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        Authorization: `Bearer ${tokenRef.current}`,
+      },
+    });
+
+    if (response.status === 401) {
+      // Token expired or invalid: send the person back to the login screen.
+      await supabase.auth.signOut();
+    } else if (response.status === 403) {
+      setAccess("denied");
+    }
+
+    return response;
+  }, []);
+
+  // ---------- 3. Is this person on the approved list? ----------
+  const checkAccess = useCallback(async () => {
+    setAccess("checking");
+    try {
+      const response = await apiFetch("/me");
+      if (response.ok) setAccess("allowed");
+      else if (response.status === 403) setAccess("denied");
+      else if (response.status !== 401) setAccess("error");
+    } catch {
+      setAccess("error");
+    }
+  }, [apiFetch]);
+
+  useEffect(() => {
+    if (userId) checkAccess();
+  }, [userId, checkAccess]);
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    setReport(null);
+    setAccess("checking");
+  }
+
+  // ---------- 4. The replenishment report ----------
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -40,14 +118,14 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/replenishment`);
+      const response = await apiFetch("/replenishment");
 
+      if (response.status === 401 || response.status === 403) return;
       if (!response.ok) {
         throw new Error(`API request failed: ${response.status}`);
       }
 
-      const data = await response.json();
-      setReport(data);
+      setReport(await response.json());
     } catch (err) {
       setError(
         "Unable to load the replenishment report. The server may be waking up; try again in a minute."
@@ -58,9 +136,72 @@ function App() {
   }
 
   useEffect(() => {
-    loadReport();
-  }, []);
+    if (access === "allowed") loadReport();
+  }, [access]);
 
+  // ---------- Screens before the dashboard ----------
+  if (!supabaseConfigured) {
+    return (
+      <main className="dashboard">
+        <div className="error-panel">
+          <p>
+            Login is not configured. Set VITE_SUPABASE_URL and
+            VITE_SUPABASE_ANON_KEY, then rebuild the website.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!authReady) {
+    return (
+      <main className="dashboard">
+        <p className="message">Checking sign-in…</p>
+      </main>
+    );
+  }
+
+  if (!session) {
+    return <Login />;
+  }
+
+  if (access !== "allowed") {
+    return (
+      <main className="dashboard login-page">
+        <section className="login-card">
+          {access === "checking" && (
+            <p className="message">
+              Checking your access… the free server can take up to a minute
+              to wake up.
+            </p>
+          )}
+          {access === "denied" && (
+            <>
+              <h2>Not authorised</h2>
+              <p>
+                You're signed in as <strong>{userEmail}</strong>, but this
+                account isn't on the approved list. Ask the administrator for
+                access.
+              </p>
+            </>
+          )}
+          {access === "error" && (
+            <>
+              <p>Could not reach the server. It may be waking up.</p>
+              <button className="refresh-button" onClick={checkAccess}>
+                Try again
+              </button>
+            </>
+          )}
+          <button className="secondary-button" onClick={signOut}>
+            Sign out
+          </button>
+        </section>
+      </main>
+    );
+  }
+
+  // ---------- The dashboard (approved users only) ----------
   const items = report?.items ?? [];
   const totalStock = items.reduce(
     (sum, item) => sum + (Number(item.available_stock_latest_snapshot) || 0),
@@ -87,9 +228,15 @@ function App() {
             <p>Inventory &amp; Replenishment Dashboard</p>
           </div>
         </div>
-        <button className="refresh-button" onClick={() => loadReport()}>
-          Refresh report
-        </button>
+        <div className="topbar-actions">
+          <span className="user-chip">{userEmail}</span>
+          <button className="refresh-button" onClick={() => loadReport()}>
+            Refresh report
+          </button>
+          <button className="secondary-button" onClick={signOut}>
+            Sign out
+          </button>
+        </div>
       </header>
 
       <section className="intro">
@@ -252,7 +399,7 @@ function App() {
 
       {/* Product CRUD panel: every change reloads the report above. */}
       <ProductManager
-        apiUrl={API_URL}
+        apiFetch={apiFetch}
         reportItems={items}
         onChanged={() => loadReport(true)}
       />
